@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <wx/wx.h>
+#include "DrawingPanel.h"
 
 class MainWindow : public wxFrame
 {
@@ -10,8 +11,7 @@ public:
     ~MainWindow();
 
 private:
-    void OnExit(wxCommandEvent& event);
-    void OnAbout(wxCommandEvent& event);
+    DrawingPanel* m_drawingPanel;
 
     wxDECLARE_EVENT_TABLE();
 };
