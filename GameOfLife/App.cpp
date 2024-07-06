@@ -1,21 +1,19 @@
 #include "App.h"
+#include "MainWindow.h"
 
 wxIMPLEMENT_APP(App);
 
-App::App() : mainWindow(nullptr)
+App::App()
 {
-
 }
 
 App::~App()
 {
-    delete mainWindow;
 }
 
 bool App::OnInit()
 {
-    mainWindow = new MainWindow("Game of Life", wxPoint(0, 0), wxSize(200, 200));
-    mainWindow->Show(true);
-
+    MainWindow* mainWin = new MainWindow("Game of Life", wxPoint(50, 50), wxSize(800, 600));
+    mainWin->Show(true);
     return true;
 }

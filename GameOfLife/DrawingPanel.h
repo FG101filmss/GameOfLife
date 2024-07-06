@@ -1,25 +1,24 @@
-#ifndef DRAWINGPANEL_H
-#define DRAWINGPANEL_H
+#ifndef DRAWING_PANEL_H
+#define DRAWING_PANEL_H
 
 #include <wx/wx.h>
 
-class MainWindow;
+class MainWindow; // Forward declaration
 
 class DrawingPanel : public wxPanel
 {
 public:
-    DrawingPanel(MainWindow* parent, wxWindowID id = wxID_ANY,
-        const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize,
-        long style = wxTAB_TRAVERSAL, const wxString& name = wxPanelNameStr);
+    DrawingPanel(MainWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pos = wxDefaultPosition,
+        const wxSize& size = wxDefaultSize, long style = wxTAB_TRAVERSAL, const wxString& name = wxPanelNameStr);
     ~DrawingPanel();
 
-    void OnPaint(wxPaintEvent& event);
-
 private:
+    void OnPaint(wxPaintEvent& event);
+    void OnResize(wxSizeEvent& event); // Method to handle resize events
+
     int m_gridSize;
-    static const int m_cellSize;
 
     wxDECLARE_EVENT_TABLE();
 };
 
-#endif // DRAWINGPANEL_H
+#endif // DRAWING_PANEL_H

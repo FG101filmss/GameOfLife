@@ -1,5 +1,5 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef MAIN_WINDOW_H
+#define MAIN_WINDOW_H
 
 #include <wx/wx.h>
 #include "DrawingPanel.h"
@@ -12,8 +12,6 @@ public:
 
 private:
     DrawingPanel* m_drawingPanel;
-
-    wxDECLARE_EVENT_TABLE();
 };
 
-#endif // MAINWINDOW_H
+#endif // MAIN_WINDOW_H
