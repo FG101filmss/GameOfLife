@@ -3,8 +3,6 @@
 #include <wx/graphics.h>
 #include <wx/dcbuffer.h>
 
-const int DrawingPanel::m_cellSize = 10;
-
 DrawingPanel::DrawingPanel(MainWindow* parent, wxWindowID id, const wxPoint& pos,
     const wxSize& size, long style, const wxString& name)
     : wxPanel(parent, id, pos, size, style, name), m_gridSize(15)
@@ -32,17 +30,20 @@ void DrawingPanel::OnPaint(wxPaintEvent& event)
 
     gc->SetPen(*wxBLACK_PEN);
 
-    // Set fill color (brush)
     gc->SetBrush(*wxWHITE_BRUSH);
+
+    wxSize panelSize = GetSize();
+    int cellWidth = panelSize.x / m_gridSize;
+    int cellHeight = panelSize.y / m_gridSize;
 
     for (int row = 0; row < m_gridSize; ++row)
     {
         for (int col = 0; col < m_gridSize; ++col)
         {
-            int x = col * m_cellSize;
-            int y = row * m_cellSize;
+            int x = col * cellWidth;
+            int y = row * cellHeight;
 
-            gc->DrawRectangle(x, y, m_cellSize, m_cellSize);
+            gc->DrawRectangle(x, y, cellWidth, cellHeight);
         }
     }
 
