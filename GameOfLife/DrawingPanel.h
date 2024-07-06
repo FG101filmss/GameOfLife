@@ -16,7 +16,8 @@ public:
     void OnPaint(wxPaintEvent& event);
 
 private:
-    wxGraphicsContext* m_gc;
+    int m_gridSize;
+    static const int m_cellSize;
 
     wxDECLARE_EVENT_TABLE();
 };
