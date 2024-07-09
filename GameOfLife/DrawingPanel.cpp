@@ -5,22 +5,28 @@
 
 DrawingPanel::DrawingPanel(MainWindow* parent, wxWindowID id, const wxPoint& pos,
     const wxSize& size, long style, const wxString& name)
-    : wxPanel(parent, id, pos, size, style, name), m_gridSize(15) // Default grid size
+    : wxPanel(parent, id, pos, size, style, name), m_gridSize(15)
 {
     this->SetBackgroundStyle(wxBG_STYLE_PAINT);
     this->Bind(wxEVT_PAINT, &DrawingPanel::OnPaint, this);
-    this->Bind(wxEVT_SIZE, &DrawingPanel::OnResize, this); // Bind resize event
+    this->Bind(wxEVT_SIZE, &DrawingPanel::OnResize, this);
 }
 
 DrawingPanel::~DrawingPanel()
 {
-    // Destructor implementation if needed
+
+}
+
+void DrawingPanel::SetSize(const wxSize& size)
+{
+    wxPanel::SetSize(size);
+    Refresh();
 }
 
 void DrawingPanel::OnPaint(wxPaintEvent& event)
 {
     wxAutoBufferedPaintDC dc(this);
-    dc.Clear(); // Clear the drawing context
+    dc.Clear();
 
     wxGraphicsContext* gc = wxGraphicsContext::Create(dc);
     if (!gc)
@@ -29,37 +35,32 @@ void DrawingPanel::OnPaint(wxPaintEvent& event)
         return;
     }
 
-    // Set outline color (pen)
-    gc->SetPen(*wxBLACK_PEN); // Black pen
+    gc->SetPen(*wxBLACK_PEN);
 
-    // Set fill color (brush)
-    gc->SetBrush(*wxWHITE_BRUSH); // White brush
+    gc->SetBrush(*wxWHITE_BRUSH);
 
-    // Calculate cell width and height
-    wxSize panelSize = GetClientSize(); // Get the size of the DrawingPanel
-    int cellWidth = panelSize.x / m_gridSize; // Calculate cell width
-    int cellHeight = panelSize.y / m_gridSize; // Calculate cell height
+    wxSize panelSize = GetClientSize();
+    int cellWidth = panelSize.x / m_gridSize;
+    int cellHeight = panelSize.y / m_gridSize;
 
-    // Draw grid of rectangles
     for (int row = 0; row < m_gridSize; ++row)
     {
         for (int col = 0; col < m_gridSize; ++col)
         {
-            int x = col * cellWidth; // Calculate x-coordinate
-            int y = row * cellHeight; // Calculate y-coordinate
+            int x = col * cellWidth;
+            int y = row * cellHeight;
 
-            // Draw rectangle
             gc->DrawRectangle(x, y, cellWidth, cellHeight);
         }
     }
 
-    delete gc; // Clean up wxGraphicsContext
+    delete gc;
 }
 
 void DrawingPanel::OnResize(wxSizeEvent& event)
 {
-    Refresh(); // Refresh the panel to trigger a repaint
-    event.Skip(); // Continue processing the event
+    Refresh();
+    event.Skip();
 }
 
 wxBEGIN_EVENT_TABLE(DrawingPanel, wxPanel)

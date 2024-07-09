@@ -12,6 +12,10 @@ public:
 
 private:
     DrawingPanel* m_drawingPanel;
+
+    void OnResize(wxSizeEvent& event);
+
+    wxDECLARE_EVENT_TABLE();
 };
 
 #endif // MAIN_WINDOW_H

@@ -3,7 +3,7 @@
 
 #include <wx/wx.h>
 
-class MainWindow; // Forward declaration
+class MainWindow;
 
 class DrawingPanel : public wxPanel
 {
@@ -12,11 +12,13 @@ public:
         const wxSize& size = wxDefaultSize, long style = wxTAB_TRAVERSAL, const wxString& name = wxPanelNameStr);
     ~DrawingPanel();
 
-private:
-    void OnPaint(wxPaintEvent& event);
-    void OnResize(wxSizeEvent& event); // Method to handle resize events
+    void SetSize(const wxSize& size);
 
+private:
     int m_gridSize;
+
+    void OnPaint(wxPaintEvent& event);
+    void OnResize(wxSizeEvent& event);
 
     wxDECLARE_EVENT_TABLE();
 };
