@@ -14,12 +14,17 @@ DrawingPanel::DrawingPanel(MainWindow* parent, wxWindowID id, const wxPoint& pos
 
 DrawingPanel::~DrawingPanel()
 {
-
 }
 
 void DrawingPanel::SetSize(const wxSize& size)
 {
     wxPanel::SetSize(size);
+    Refresh();
+}
+
+void DrawingPanel::SetGridSize(int size)
+{
+    m_gridSize = size;
     Refresh();
 }
 
@@ -36,7 +41,6 @@ void DrawingPanel::OnPaint(wxPaintEvent& event)
     }
 
     gc->SetPen(*wxBLACK_PEN);
-
     gc->SetBrush(*wxWHITE_BRUSH);
 
     wxSize panelSize = GetClientSize();
@@ -49,7 +53,6 @@ void DrawingPanel::OnPaint(wxPaintEvent& event)
         {
             int x = col * cellWidth;
             int y = row * cellHeight;
-
             gc->DrawRectangle(x, y, cellWidth, cellHeight);
         }
     }

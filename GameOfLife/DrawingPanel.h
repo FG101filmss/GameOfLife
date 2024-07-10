@@ -13,6 +13,7 @@ public:
     ~DrawingPanel();
 
     void SetSize(const wxSize& size);
+    void SetGridSize(int size);
 
 private:
     int m_gridSize;
