@@ -18,6 +18,8 @@ public:
     void UpdateStatusBar();
     void IncrementGenerationCount();
     void UpdateLivingCellCount(int count);
+    
+    int CountLivingNeighbors(int row, int col);
 
 private:
     // Member Variables

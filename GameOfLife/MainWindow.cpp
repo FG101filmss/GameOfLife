@@ -128,3 +128,24 @@ void MainWindow::OnTrash(wxCommandEvent& event)
 {
     wxMessageBox("Trash button clicked!");
 }
+
+int MainWindow::CountLivingNeighbors(int row, int col)
+{
+    int livingNeighbors = 0;
+    int startRow = max(row - 1, 0);
+    int endRow = min(row + 1, m_gridSize - 1);
+    int startCol = max(col - 1, 0);
+    int endCol = min(col + 1, m_gridSize - 1);
+
+    for (int r = startRow; r <= endRow; ++r)
+    {
+        for (int c = startCol; c <= endCol; ++c)
+        {
+            if ((r != row || c != col) && r >= 0 && r < m_gridSize && c >= 0 && c < m_gridSize && m_gameBoard[r][c])
+            {
+                ++livingNeighbors;
+            }
+        }
+    }
+    return livingNeighbors;
+}
