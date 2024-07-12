@@ -14,13 +14,15 @@ DrawingPanel::DrawingPanel(MainWindow* parent, vector<vector<bool>>& gameBoard, 
     : wxPanel(parent, id, pos, size, style, name), m_gridSize(15), m_gameBoard(gameBoard)
 {
     this->SetBackgroundStyle(wxBG_STYLE_PAINT);
+
+    InitializeGrid();
 }
 
 DrawingPanel::~DrawingPanel()
 {
 }
 
-void DrawingPanel::SetSize(const wxSize& size)
+void DrawingPanel::SetPanelSize(const wxSize& size)
 {
     wxPanel::SetSize(size);
     Refresh();
@@ -29,7 +31,20 @@ void DrawingPanel::SetSize(const wxSize& size)
 void DrawingPanel::SetGridSize(int size)
 {
     m_gridSize = size;
-    Refresh();
+    InitializeGrid();
+}
+
+void DrawingPanel::ToggleCellState(int row, int col)
+{
+    if (row >= 0 && row < m_gridSize && col >= 0 && col < m_gridSize) {
+        cellStates[row][col] = !cellStates[row][col];
+        Refresh();
+    }
+}
+
+void DrawingPanel::InitializeGrid()
+{
+    cellStates.assign(m_gridSize, vector<bool>(m_gridSize, false));
 }
 
 void DrawingPanel::OnPaint(wxPaintEvent& event)
@@ -75,7 +90,7 @@ void DrawingPanel::OnPaint(wxPaintEvent& event)
 
 void DrawingPanel::OnResize(wxSizeEvent& event)
 {
-    Refresh();
+    SetPanelSize(event.GetSize());
     event.Skip();
 }
 

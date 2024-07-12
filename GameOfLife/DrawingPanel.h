@@ -16,16 +16,20 @@ public:
         long style = wxTAB_TRAVERSAL, const wxString& name = wxPanelNameStr);
     ~DrawingPanel();
 
-    void SetSize(const wxSize& size);
+    void SetPanelSize(const wxSize& size);
+    void ToggleCellState(int row, int col);
     void SetGridSize(int size);
 
 private:
-    int m_gridSize;
     vector<vector<bool>>& m_gameBoard;
 
     void OnPaint(wxPaintEvent& event);
     void OnResize(wxSizeEvent& event);
+    void InitializeGrid();
     void OnMouseUp(wxMouseEvent& event);
+
+    int m_gridSize;
+    vector<vector<bool>> cellStates;
 
     wxDECLARE_EVENT_TABLE();
 };

@@ -15,6 +15,7 @@ public:
     MainWindow(const wxString& title, const wxPoint& pos, const wxSize& size);
     ~MainWindow();
 
+
     void UpdateStatusBar();
     void IncrementGenerationCount();
     void UpdateLivingCellCount(int count);
@@ -34,7 +35,6 @@ private:
     wxToolBar* m_toolBar;
 
     // Methods
-    void InitializeGrid();
     void SetupToolBar();
 
     // Event Handlers
@@ -43,6 +43,7 @@ private:
     void OnPause(wxCommandEvent& event);
     void OnNext(wxCommandEvent& event);
     void OnTrash(wxCommandEvent& event);
+    void InitializeGrid();
 
     wxDECLARE_EVENT_TABLE();
 };

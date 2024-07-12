@@ -2,6 +2,7 @@
 #include "MainWindow.h"
 #include "DrawingPanel.h"
 #include <wx/artprov.h>
+#include <vector>
 
 // XPM Files
 #include "play.xpm"
@@ -88,7 +89,6 @@ void MainWindow::UpdateLivingCellCount(int count)
     m_livingCellCount = count;
     UpdateStatusBar();
 }
-
 // TOOL BAR, BUTTONS AND ICONS
 
 void MainWindow::SetupToolBar()
