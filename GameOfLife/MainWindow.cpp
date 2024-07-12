@@ -17,12 +17,11 @@ MainWindow::MainWindow(const wxString& title, const wxPoint& pos, const wxSize& 
     m_drawingPanel = new DrawingPanel(this, m_gameBoard);
 
     wxBoxSizer* sizer = new wxBoxSizer(wxVERTICAL);
+
     sizer->Add(m_drawingPanel, 1, wxEXPAND | wxALL, 0);
 
-    this->SetSizer(sizer);
-    this->Layout();
-
-    this->Bind(wxEVT_SIZE, &MainWindow::OnResize, this);
+    SetSizer(sizer);
+    Layout();
 
     InitializeGrid();
 }
@@ -34,7 +33,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::OnResize(wxSizeEvent& event)
 {
-    wxSize newSize = this->GetSize();
+    wxSize newSize = GetSize();
     m_drawingPanel->SetSize(newSize);
     event.Skip();
 }
