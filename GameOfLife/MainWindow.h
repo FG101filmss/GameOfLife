@@ -5,14 +5,13 @@
 #include "DrawingPanel.h"
 #include <vector>
 
+using namespace std;
+
 class MainWindow : public wxFrame
 {
 public:
     MainWindow(const wxString& title, const wxPoint& pos, const wxSize& size);
     ~MainWindow();
-
-    void InitializeGrid();
-    void SetGridSize(int size);
 
 private:
     DrawingPanel* m_drawingPanel;
@@ -20,6 +19,7 @@ private:
     int m_gridSize;
 
     void OnResize(wxSizeEvent& event);
+    void InitializeGrid();
 
     wxDECLARE_EVENT_TABLE();
 };
