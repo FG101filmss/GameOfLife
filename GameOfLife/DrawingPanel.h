@@ -25,7 +25,6 @@ private:
 
     void OnPaint(wxPaintEvent& event);
     void OnResize(wxSizeEvent& event);
-    void OnMouseClick(wxMouseEvent& event);
     void OnMouseUp(wxMouseEvent& event);
 
     wxDECLARE_EVENT_TABLE();

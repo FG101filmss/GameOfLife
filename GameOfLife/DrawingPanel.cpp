@@ -10,7 +10,6 @@ DrawingPanel::DrawingPanel(MainWindow* parent, std::vector<std::vector<bool>>& g
     this->SetBackgroundStyle(wxBG_STYLE_PAINT);
     this->Bind(wxEVT_PAINT, &DrawingPanel::OnPaint, this);
     this->Bind(wxEVT_SIZE, &DrawingPanel::OnResize, this);
-    this->Bind(wxEVT_LEFT_DOWN, &DrawingPanel::OnMouseClick, this);
     this->Bind(wxEVT_LEFT_UP, &DrawingPanel::OnMouseUp, this);
 }
 
@@ -58,7 +57,7 @@ void DrawingPanel::OnPaint(wxPaintEvent& event)
 
             if (m_gameBoard[row][col])
             {
-                gc->SetBrush(*wxBLACK_BRUSH);
+                gc->SetBrush(*wxLIGHT_GREY_BRUSH);
             }
             else
             {
@@ -78,23 +77,6 @@ void DrawingPanel::OnResize(wxSizeEvent& event)
     event.Skip();
 }
 
-void DrawingPanel::OnMouseClick(wxMouseEvent& event)
-{
-    wxPoint mousePos = event.GetPosition();
-    wxSize panelSize = GetClientSize();
-
-    int cellWidth = panelSize.x / m_gridSize;
-    int cellHeight = panelSize.y / m_gridSize;
-
-    int col = mousePos.x / cellWidth;
-    int row = mousePos.y / cellHeight;
-
-    if (row >= 0 && row < m_gridSize && col >= 0 && col < m_gridSize)
-    {
-        m_gameBoard[row][col] = !m_gameBoard[row][col];
-        Refresh();
-    }
-}
 
 void DrawingPanel::OnMouseUp(wxMouseEvent& event)
 {
@@ -117,6 +99,5 @@ void DrawingPanel::OnMouseUp(wxMouseEvent& event)
 wxBEGIN_EVENT_TABLE(DrawingPanel, wxPanel)
     EVT_PAINT(DrawingPanel::OnPaint)
     EVT_SIZE(DrawingPanel::OnResize)
-    EVT_LEFT_DOWN(DrawingPanel::OnMouseClick)
     EVT_LEFT_UP(DrawingPanel::OnMouseUp)
 wxEND_EVENT_TABLE()

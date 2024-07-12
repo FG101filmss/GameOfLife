@@ -8,6 +8,12 @@ wxEND_EVENT_TABLE()
 MainWindow::MainWindow(const wxString& title, const wxPoint& pos, const wxSize& size)
     : wxFrame(nullptr, wxID_ANY, title, pos, size), m_gridSize(15)
 {
+    m_gameBoard.resize(m_gridSize);
+    for (int i = 0; i < m_gridSize; ++i)
+    {
+        m_gameBoard[i].resize(m_gridSize, false);
+    }
+
     m_drawingPanel = new DrawingPanel(this, m_gameBoard);
 
     wxBoxSizer* sizer = new wxBoxSizer(wxVERTICAL);
@@ -15,6 +21,8 @@ MainWindow::MainWindow(const wxString& title, const wxPoint& pos, const wxSize& 
 
     this->SetSizer(sizer);
     this->Layout();
+
+    this->Bind(wxEVT_SIZE, &MainWindow::OnResize, this);
 
     InitializeGrid();
 }
@@ -33,7 +41,11 @@ void MainWindow::OnResize(wxSizeEvent& event)
 
 void MainWindow::InitializeGrid()
 {
-    m_gameBoard.resize(m_gridSize, std::vector<bool>(m_gridSize, false));
+    m_gameBoard.resize(m_gridSize);
+    for (int i = 0; i < m_gridSize; ++i)
+    {
+        m_gameBoard[i].resize(m_gridSize, false);
+    }
 
     m_drawingPanel->SetGridSize(m_gridSize);
 }
