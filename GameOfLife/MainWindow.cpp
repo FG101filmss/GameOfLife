@@ -6,7 +6,7 @@ wxBEGIN_EVENT_TABLE(MainWindow, wxFrame)
 wxEND_EVENT_TABLE()
 
 MainWindow::MainWindow(const wxString& title, const wxPoint& pos, const wxSize& size)
-    : wxFrame(nullptr, wxID_ANY, title, pos, size), m_gridSize(15)
+    : wxFrame(nullptr, wxID_ANY, title, pos, size), m_gridSize(15), m_generationCount(0), m_livingCellCount(0)
 {
     m_gameBoard.resize(m_gridSize);
     for (int i = 0; i < m_gridSize; ++i)
@@ -21,9 +21,13 @@ MainWindow::MainWindow(const wxString& title, const wxPoint& pos, const wxSize& 
     sizer->Add(m_drawingPanel, 1, wxEXPAND | wxALL, 0);
 
     SetSizer(sizer);
-    Layout();
 
     InitializeGrid();
+
+    m_statusBar = CreateStatusBar();
+    UpdateStatusBar();
+
+    Layout();
 }
 
 MainWindow::~MainWindow()
@@ -47,4 +51,23 @@ void MainWindow::InitializeGrid()
     }
 
     m_drawingPanel->SetGridSize(m_gridSize);
+}
+
+void MainWindow::UpdateStatusBar()
+{
+    wxString status;
+    status.Printf("Generation: %d, Living Cells: %d", m_generationCount, m_livingCellCount);
+    SetStatusText(status, 0);
+}
+
+void MainWindow::IncrementGenerationCount()
+{
+    m_generationCount++;
+    UpdateStatusBar();
+}
+
+void MainWindow::UpdateLivingCellCount(int count)
+{
+    m_livingCellCount = count;
+    UpdateStatusBar();
 }

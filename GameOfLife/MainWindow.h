@@ -13,10 +13,18 @@ public:
     MainWindow(const wxString& title, const wxPoint& pos, const wxSize& size);
     ~MainWindow();
 
+    void UpdateStatusBar();
+    void IncrementGenerationCount();
+    void UpdateLivingCellCount(int count);
+
 private:
     DrawingPanel* m_drawingPanel;
-    std::vector<std::vector<bool>> m_gameBoard;
+    vector<vector<bool>> m_gameBoard;
     int m_gridSize;
+    int m_generationCount;
+    int m_livingCellCount;
+
+    wxStatusBar* m_statusBar;
 
     void OnResize(wxSizeEvent& event);
     void InitializeGrid();

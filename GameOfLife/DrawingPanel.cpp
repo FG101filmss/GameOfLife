@@ -9,7 +9,7 @@ EVT_SIZE(DrawingPanel::OnResize)
 EVT_LEFT_UP(DrawingPanel::OnMouseUp)
 wxEND_EVENT_TABLE()
 
-DrawingPanel::DrawingPanel(MainWindow* parent, std::vector<std::vector<bool>>& gameBoard, wxWindowID id,
+DrawingPanel::DrawingPanel(MainWindow* parent, vector<vector<bool>>& gameBoard, wxWindowID id,
     const wxPoint& pos, const wxSize& size, long style, const wxString& name)
     : wxPanel(parent, id, pos, size, style, name), m_gridSize(15), m_gameBoard(gameBoard)
 {
