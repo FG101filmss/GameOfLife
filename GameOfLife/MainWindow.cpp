@@ -1,8 +1,25 @@
+// Header Files
 #include "MainWindow.h"
 #include "DrawingPanel.h"
+#include <wx/artprov.h>
+
+// XPM Files
+#include "play.xpm"
+#include "pause.xpm"
+#include "next.xpm"
+#include "trash.xpm"
+
+const int playButtonID = wxID_HIGHEST + 1;
+const int pauseButtonID = wxID_HIGHEST + 2;
+const int nextButtonID = wxID_HIGHEST + 3;
+const int trashButtonID = wxID_HIGHEST + 4;
 
 wxBEGIN_EVENT_TABLE(MainWindow, wxFrame)
     EVT_SIZE(MainWindow::OnResize)
+    EVT_MENU(playButtonID, MainWindow::OnPlay)
+    EVT_MENU(pauseButtonID, MainWindow::OnPause)
+    EVT_MENU(nextButtonID, MainWindow::OnNext)
+    EVT_MENU(trashButtonID, MainWindow::OnTrash)
 wxEND_EVENT_TABLE()
 
 MainWindow::MainWindow(const wxString& title, const wxPoint& pos, const wxSize& size)
@@ -17,16 +34,13 @@ MainWindow::MainWindow(const wxString& title, const wxPoint& pos, const wxSize& 
     m_drawingPanel = new DrawingPanel(this, m_gameBoard);
 
     wxBoxSizer* sizer = new wxBoxSizer(wxVERTICAL);
-
     sizer->Add(m_drawingPanel, 1, wxEXPAND | wxALL, 0);
-
     SetSizer(sizer);
 
     InitializeGrid();
-
     m_statusBar = CreateStatusBar();
     UpdateStatusBar();
-
+    SetupToolBar();
     Layout();
 }
 
@@ -38,7 +52,10 @@ MainWindow::~MainWindow()
 void MainWindow::OnResize(wxSizeEvent& event)
 {
     wxSize newSize = GetSize();
-    m_drawingPanel->SetSize(newSize);
+    if (m_drawingPanel)
+    {
+        m_drawingPanel->SetSize(newSize);
+    }
     event.Skip();
 }
 
@@ -70,4 +87,44 @@ void MainWindow::UpdateLivingCellCount(int count)
 {
     m_livingCellCount = count;
     UpdateStatusBar();
+}
+
+// TOOL BAR, BUTTONS AND ICONS
+
+void MainWindow::SetupToolBar()
+{
+    m_toolBar = CreateToolBar(wxNO_BORDER | wxTB_HORIZONTAL);
+
+    // Buttons
+    wxBitmap playIcon(play_xpm);
+    wxBitmap pauseIcon(pause_xpm);
+    wxBitmap nextIcon(next_xpm);
+    wxBitmap trashIcon(trash_xpm);
+
+    m_toolBar->AddTool(playButtonID, "Start", playIcon);
+    m_toolBar->AddTool(pauseButtonID, "Pause", pauseIcon);
+    m_toolBar->AddTool(nextButtonID, "Next", nextIcon);
+    m_toolBar->AddTool(trashButtonID, "Clear", trashIcon);
+
+    m_toolBar->Realize();
+}
+
+void MainWindow::OnPlay(wxCommandEvent& event)
+{
+    wxMessageBox("Start button clicked!");
+}
+
+void MainWindow::OnPause(wxCommandEvent& event)
+{
+    wxMessageBox("Pause button clicked!");
+}
+
+void MainWindow::OnNext(wxCommandEvent& event)
+{
+    wxMessageBox("Next button clicked!");
+}
+
+void MainWindow::OnTrash(wxCommandEvent& event)
+{
+    wxMessageBox("Trash button clicked!");
 }
