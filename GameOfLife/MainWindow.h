@@ -4,6 +4,7 @@
 #include <wx/wx.h>
 #include <wx/toolbar.h>
 #include <wx/statusbr.h>
+#include <wx/timer.h>
 #include "DrawingPanel.h"
 #include <vector>
 
@@ -19,9 +20,7 @@ public:
     void UpdateStatusBar();
     void IncrementGenerationCount();
     void UpdateLivingCellCount(int count);
-    void NextGeneration();
-    
-    int CountLivingNeighbors(int row, int col);
+
 
 private:
     // Member Variables
@@ -31,9 +30,16 @@ private:
     int m_generationCount;
     int m_livingCellCount;
 
+
     // UI Components
     wxStatusBar* m_statusBar;
     wxToolBar* m_toolBar;
+
+    //Timer
+    wxTimer* m_timer;
+    bool m_timerRunning;
+    int m_timerInterval;
+
 
     // Methods
     void SetupToolBar();
@@ -46,7 +52,11 @@ private:
     void OnPause(wxCommandEvent& event);
     void OnNext(wxCommandEvent& event);
     void OnTrash(wxCommandEvent& event);
+    void OnTimer(wxTimerEvent& event);
 
+    int CountLivingNeighbors(int row, int col);
+
+    void NextGeneration();
 
     wxDECLARE_EVENT_TABLE();
 };

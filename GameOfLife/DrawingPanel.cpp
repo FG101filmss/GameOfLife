@@ -5,7 +5,7 @@
 
 DrawingPanel::DrawingPanel(MainWindow* parent, vector<vector<bool>>& gameBoard, wxWindowID id,
     const wxPoint& pos, const wxSize& size, long style, const wxString& name)
-    : wxPanel(parent, id, pos, size, style, name), m_gridSize(15), m_gameBoard(gameBoard)
+    : wxPanel(parent, id, pos, size, style, name), m_gridSize(50), m_gameBoard(gameBoard)
 {
     this->SetBackgroundStyle(wxBG_STYLE_PAINT);
 
@@ -78,7 +78,7 @@ void DrawingPanel::OnPaint(wxPaintEvent& event)
 
 void DrawingPanel::OnResize(wxSizeEvent& event)
 {
-    SetPanelSize(event.GetSize());
+    Refresh();
     event.Skip();
 }
 
