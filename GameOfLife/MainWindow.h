@@ -19,6 +19,7 @@ public:
     void UpdateStatusBar();
     void IncrementGenerationCount();
     void UpdateLivingCellCount(int count);
+    void NextGeneration();
     
     int CountLivingNeighbors(int row, int col);
 
@@ -36,6 +37,8 @@ private:
 
     // Methods
     void SetupToolBar();
+    void InitializeGrid();
+
 
     // Event Handlers
     void OnResize(wxSizeEvent& event);
@@ -43,7 +46,7 @@ private:
     void OnPause(wxCommandEvent& event);
     void OnNext(wxCommandEvent& event);
     void OnTrash(wxCommandEvent& event);
-    void InitializeGrid();
+
 
     wxDECLARE_EVENT_TABLE();
 };

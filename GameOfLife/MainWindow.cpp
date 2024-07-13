@@ -2,7 +2,6 @@
 #include "MainWindow.h"
 #include "DrawingPanel.h"
 #include <wx/artprov.h>
-#include <vector>
 
 // XPM Files
 #include "play.xpm"
@@ -10,10 +9,10 @@
 #include "next.xpm"
 #include "trash.xpm"
 
-const int playButtonID = wxID_HIGHEST + 1;
-const int pauseButtonID = wxID_HIGHEST + 2;
-const int nextButtonID = wxID_HIGHEST + 3;
-const int trashButtonID = wxID_HIGHEST + 4;
+const int playButtonID = wxID_HIGHEST + 10000;
+const int pauseButtonID = wxID_HIGHEST + 10002;
+const int nextButtonID = wxID_HIGHEST + 10003;
+const int trashButtonID = wxID_HIGHEST + 10004;
 
 wxBEGIN_EVENT_TABLE(MainWindow, wxFrame)
     EVT_SIZE(MainWindow::OnResize)
@@ -89,6 +88,7 @@ void MainWindow::UpdateLivingCellCount(int count)
     m_livingCellCount = count;
     UpdateStatusBar();
 }
+
 // TOOL BAR, BUTTONS AND ICONS
 
 void MainWindow::SetupToolBar()
@@ -121,7 +121,7 @@ void MainWindow::OnPause(wxCommandEvent& event)
 
 void MainWindow::OnNext(wxCommandEvent& event)
 {
-    wxMessageBox("Next button clicked!");
+    NextGeneration();
 }
 
 void MainWindow::OnTrash(wxCommandEvent& event)
@@ -148,4 +148,58 @@ int MainWindow::CountLivingNeighbors(int row, int col)
         }
     }
     return livingNeighbors;
+}
+
+void MainWindow::NextGeneration()
+{
+    vector<vector<bool>> sandbox(m_gridSize, vector<bool>(m_gridSize, false));
+
+    int newLivingCellCount = 0;
+
+    for (int row = 0; row < m_gridSize; ++row)
+    {
+        for (int col = 0; col < m_gridSize; ++col)
+        {
+            int liveNeighbors = CountLivingNeighbors(row, col);
+            bool currentState = m_gameBoard[row][col];
+            bool nextState = false;
+
+            if (currentState)
+            {
+                if (liveNeighbors < 2 || liveNeighbors > 3)
+                {
+                    nextState = false;
+                }
+                else
+                {
+                    nextState = true;
+                }
+            }
+            else
+            {
+                if (liveNeighbors == 3)
+                {
+                    nextState = true;
+                }
+                else
+                {
+                    nextState = false;
+                }
+            }
+
+            sandbox[row][col] = nextState;
+
+            if (nextState)
+            {
+                newLivingCellCount++;
+            }
+        }
+    }
+
+    m_gameBoard.swap(sandbox);
+
+    UpdateLivingCellCount(newLivingCellCount);
+
+    IncrementGenerationCount();
+    m_drawingPanel->Refresh();
 }

@@ -25,7 +25,6 @@ private:
 
     void OnPaint(wxPaintEvent& event);
     void OnResize(wxSizeEvent& event);
-    void InitializeGrid();
     void OnMouseUp(wxMouseEvent& event);
 
     int m_gridSize;

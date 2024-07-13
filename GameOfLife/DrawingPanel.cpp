@@ -3,19 +3,12 @@
 #include <wx/graphics.h>
 #include <wx/dcbuffer.h>
 
-wxBEGIN_EVENT_TABLE(DrawingPanel, wxPanel)
-EVT_PAINT(DrawingPanel::OnPaint)
-EVT_SIZE(DrawingPanel::OnResize)
-EVT_LEFT_UP(DrawingPanel::OnMouseUp)
-wxEND_EVENT_TABLE()
-
 DrawingPanel::DrawingPanel(MainWindow* parent, vector<vector<bool>>& gameBoard, wxWindowID id,
     const wxPoint& pos, const wxSize& size, long style, const wxString& name)
     : wxPanel(parent, id, pos, size, style, name), m_gridSize(15), m_gameBoard(gameBoard)
 {
     this->SetBackgroundStyle(wxBG_STYLE_PAINT);
 
-    InitializeGrid();
 }
 
 DrawingPanel::~DrawingPanel()
@@ -31,7 +24,7 @@ void DrawingPanel::SetPanelSize(const wxSize& size)
 void DrawingPanel::SetGridSize(int size)
 {
     m_gridSize = size;
-    InitializeGrid();
+    Refresh();
 }
 
 void DrawingPanel::ToggleCellState(int row, int col)
@@ -40,11 +33,6 @@ void DrawingPanel::ToggleCellState(int row, int col)
         cellStates[row][col] = !cellStates[row][col];
         Refresh();
     }
-}
-
-void DrawingPanel::InitializeGrid()
-{
-    cellStates.assign(m_gridSize, vector<bool>(m_gridSize, false));
 }
 
 void DrawingPanel::OnPaint(wxPaintEvent& event)
@@ -110,3 +98,9 @@ void DrawingPanel::OnMouseUp(wxMouseEvent& event)
         Refresh();
     }
 }
+
+wxBEGIN_EVENT_TABLE(DrawingPanel, wxPanel)
+EVT_PAINT(DrawingPanel::OnPaint)
+EVT_SIZE(DrawingPanel::OnResize)
+EVT_LEFT_UP(DrawingPanel::OnMouseUp)
+wxEND_EVENT_TABLE()
