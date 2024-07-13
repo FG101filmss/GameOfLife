@@ -126,7 +126,20 @@ void MainWindow::OnNext(wxCommandEvent& event)
 
 void MainWindow::OnTrash(wxCommandEvent& event)
 {
-    wxMessageBox("Trash button clicked!");
+    for (int i = 0; i < m_gridSize; ++i)
+    {
+        for (int j = 0; j < m_gridSize; ++j)
+        {
+            m_gameBoard[i][j] = false;
+        }
+    }
+
+    m_generationCount = 0;
+    m_livingCellCount = 0;
+
+    UpdateStatusBar();
+
+    m_drawingPanel->Refresh();
 }
 
 int MainWindow::CountLivingNeighbors(int row, int col)
